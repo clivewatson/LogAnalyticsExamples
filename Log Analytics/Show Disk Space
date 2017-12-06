@@ -1,0 +1,7 @@
+Perf
+| where ObjectName == "LogicalDisk" and CounterName == "% Free Space"
+| summarize FreeSpace = min(CounterValue) by Computer, InstanceName
+| where strlen(InstanceName) == 2  
+| where FreeSpace < 20
+| sort by FreeSpace asc
+| render barchart kind=unstacked
